@@ -1,0 +1,12 @@
+name: DisasterSurvival
+version: 0.0.1
+main: io.github.tomasborsje.DisasterSurvival
+author: TomasBorsje
+website: https://github.com/TomasBorsje/DisasterSurvival
+api-version: 1.20
+load: STARTUP
+commands:
+  startevent:
+    description: Starts a disaster event.
+    usage: /<command> <event>
+    permission: disastersurvival.admin
