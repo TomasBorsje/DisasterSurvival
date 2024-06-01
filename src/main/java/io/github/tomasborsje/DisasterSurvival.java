@@ -2,6 +2,7 @@ package io.github.tomasborsje;
 
 import io.github.tomasborsje.commands.StartEventCommand;
 import io.github.tomasborsje.core.GameRunner;
+import io.github.tomasborsje.eventhandler.PlayerDeathHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
@@ -29,6 +30,7 @@ public class DisasterSurvival extends JavaPlugin {
     }
     private void registerEvents() {
         PluginManager pluginManager = Bukkit.getPluginManager();
+        pluginManager.registerEvents(new PlayerDeathHandler(), this);
     }
 
     private void registerCommands() {

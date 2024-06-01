@@ -1,7 +1,11 @@
 package io.github.tomasborsje.core;
 
 import io.github.tomasborsje.DisasterSurvival;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 /**
  * Class that represents a disaster event that can occur during a round.
@@ -35,6 +39,19 @@ public abstract class DisasterEvent {
         // Start the event
         isActive = true;
         ticksRemaining = DISASTER_DURATION;
+        respawnDeadPlayers();
+    }
+
+    /**
+     * Put any spectator players at 25, 5, 25 and in adventure mode again
+     */
+    protected void respawnDeadPlayers() {
+        for(Player player : world.getPlayers()) {
+            if(player.getGameMode() == GameMode.SPECTATOR) {
+                player.teleport(new Location(world, 25, 5, 25));
+                player.setGameMode(GameMode.ADVENTURE);
+            }
+        }
     }
 
     /**
@@ -54,6 +71,11 @@ public abstract class DisasterEvent {
     public void endEvent() {
         // End the event
         isActive = false;
+        // To any living players, play the challenge complete sound
+        for(Player player : world.getPlayers()) {
+            player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 100, 1.5f);
+        }
+        respawnDeadPlayers();
     }
 
     /**

@@ -1,8 +1,8 @@
-package io.github.tomasborsje.events;
+package io.github.tomasborsje.disasters;
 
-import io.github.tomasborsje.DisasterSurvival;
 import io.github.tomasborsje.core.DisasterEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Waterlogged;
@@ -17,6 +17,8 @@ public class FlashFloodDisasterEvent extends DisasterEvent {
     private int floodY = ARENA_MIN_Y;
     public void startEvent() {
         super.startEvent();
+        // Set weather to raining
+        world.setStorm(true);
     }
     @Override
     public void tickEvent() {
@@ -25,6 +27,10 @@ public class FlashFloodDisasterEvent extends DisasterEvent {
         if(ticksRemaining % FLOOD_LEVEL_DELAY_TICKS == 0) {
             floodY++;
             Bukkit.getLogger().info("Raising flood to y="+floodY);
+            // Play water bucket sound to all players
+            for (org.bukkit.entity.Player player : world.getPlayers()) {
+                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_SWIM, 1, 0.3f);
+            }
             // Fill all blocks at the flood level with water
             for(int x = ARENA_MIN_X; x < ARENA_MAX_X; x++) {
                 for(int z = ARENA_MIN_Z; z < ARENA_MAX_Z; z++) {
@@ -58,6 +64,8 @@ public class FlashFloodDisasterEvent extends DisasterEvent {
     @Override
     public void endEvent() {
         super.endEvent();
+        // Set weather to clear
+        world.setStorm(false);
         // Remove all water
         for(int x = ARENA_MIN_X; x < ARENA_MAX_X; x++) {
             for(int y = ARENA_MIN_Y; y < ARENA_MAX_Y; y++) {

@@ -40,7 +40,6 @@ public class GameRunner extends BukkitRunnable {
                     gameState = GameState.WAITING;
                     return;
                 }
-
                 // Tick all running events
                 for (DisasterEvent event : runningEvents) {
                     event.tickEvent();

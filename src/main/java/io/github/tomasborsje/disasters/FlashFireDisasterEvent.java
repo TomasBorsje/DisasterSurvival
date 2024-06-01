@@ -1,4 +1,4 @@
-package io.github.tomasborsje.events;
+package io.github.tomasborsje.disasters;
 
 import io.github.tomasborsje.DisasterSurvival;
 import io.github.tomasborsje.core.DisasterEvent;
